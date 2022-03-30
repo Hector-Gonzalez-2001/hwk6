@@ -22,7 +22,7 @@ export default function MyComponent() {
             <Button
                 variant="outlined"
                 onClick={() => {
-                    fetch("/toggle_button/" + toggleButton)
+                    fetch("http://127.0.0.1:5000/toggle_button/" + toggleButton)
                         .then(response =>
                             response.json()
                         )
