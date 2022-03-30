@@ -13,6 +13,7 @@ import { Button, TextField } from '@material-ui/core';
 
 export default function MyComponent() {
     const [toggleButton, setButton] = useState("");
+    const [toggleOutput, setOutput] = useState("");
 
     return (
         <div>
@@ -28,6 +29,7 @@ export default function MyComponent() {
                         )
                         .then(data => {
                             setButton(data.button)
+                            setOutput(data.button)
                         })
                         .catch(error => {
                             console.log(error)
@@ -38,7 +40,7 @@ export default function MyComponent() {
             </Button>
 
             <h1>
-                {toggleButton}
+                {toggleOutput}
             </h1>
 
         </div>

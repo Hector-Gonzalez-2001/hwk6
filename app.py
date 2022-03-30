@@ -1,4 +1,5 @@
 """app.py: A Flask app that interacts with a React app and can be deployed to Heroku"""
+import os
 __author__ = "Jared McArthur"
 __date__ = "11/01/2021"
 
@@ -9,7 +10,7 @@ from flask.helpers import send_from_directory
 from flask_cors import CORS
 
 # uses 'frontend' because that is where our react app is stored
-app = Flask(__name__, static_folder="frontend/build", static_url_path="")
+app = Flask(__name__, static_folder="./build", static_url_path="/")
 
 # comment out on deployment
 CORS(app)
@@ -27,10 +28,19 @@ def toggle_button(button_state: str):
     return jsonify(button=output)
 
 
-@app.route("/")
+# @app.route("/")
+# def index():
+#     return send_from_directory(app.static_folder, "index.html")
+
+@app.route('/')
 def index():
-    return send_from_directory(app.static_folder, "index.html")
+    return app.send_static_file('index.html')
+
+
+@app.errorhandler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0")
+    app.run(host='0.0.0.0', debug=False, port=os.environ.get('PORT', 80))
